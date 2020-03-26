@@ -24,7 +24,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             if let results = try managedObjectContext.fetch(fetchRequest) as? [NSManagedObject] {
                 for result in results {
                     if let deviceType = result.value(forKey: "deviceType") as? String, let name = result.value(forKey: "name") as? String {
-                        print("Got \(deviceType) names = \(name)")
+                        print("Got \(deviceType) name = \(name)")
                     }
                 }
             }
