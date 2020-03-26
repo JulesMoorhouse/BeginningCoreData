@@ -12,10 +12,11 @@ import CoreData
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
-
-
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        
+        addTestData()
+        
         return true
     }
 
@@ -78,5 +79,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
     }
 
+    func addTestData() {
+        let managedObjectContext = persistentContainer.viewContext
+
+        guard let entity =
+            NSEntityDescription.entity(forEntityName: "Device", in: managedObjectContext) else {
+                fatalError("Could not find entry description!")
+        }
+        
+        for i in 1...25 {
+            let device = NSManagedObject(entity: entity, insertInto: managedObjectContext)
+            
+            device.setValue("Some Device #\(i)", forKey: "name")
+            device.setValue(i % 3 == 0 ? "Watch" : "iPhone", forKey: "deviceType")
+        }
+        
+        //Test data is not save, just kept in memory
+    }
 }
 
