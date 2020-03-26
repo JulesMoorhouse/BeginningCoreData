@@ -17,6 +17,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         addTestData()
         
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Device")
+        let managedObjectContext = persistentContainer.viewContext
+        
+        do {
+            if let results = try managedObjectContext.fetch(fetchRequest) as? [NSManagedObject] {
+                for result in results {
+                    if let deviceType = result.value(forKey: "deviceType") as? String, let name = result.value(forKey: "name") as? String {
+                        print("Got \(deviceType) names = \(name)")
+                    }
+                }
+            }
+        } catch {
+            print("There was a fetch error!")
+        }
+        
         return true
     }
 
