@@ -17,11 +17,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         addTestData()
         
+        // Instantiate fetch request
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Device")
         let managedObjectContext = persistentContainer.viewContext
         
         do {
+            // Get optional array and cast to managed object
             if let results = try managedObjectContext.fetch(fetchRequest) as? [NSManagedObject] {
+                // Iterate unordered list of results
                 for result in results {
                     if let deviceType = result.value(forKey: "deviceType") as? String, let name = result.value(forKey: "name") as? String {
                         print("Got \(deviceType) name = \(name)")
@@ -97,19 +100,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func addTestData() {
         let managedObjectContext = persistentContainer.viewContext
 
+        // Reference to Core Data Device entity
         guard let entity =
             NSEntityDescription.entity(forEntityName: "Device", in: managedObjectContext) else {
                 fatalError("Could not find entry description!")
         }
         
         for i in 1...25 {
+            // Create an instance of the managed object and set properties into the context
             let device = NSManagedObject(entity: entity, insertInto: managedObjectContext)
             
+            // Add test data values
             device.setValue("Some Device #\(i)", forKey: "name")
             device.setValue(i % 3 == 0 ? "Watch" : "iPhone", forKey: "deviceType")
         }
         
-        //Test data is not save, just kept in memory
+        //Test data is not saved, just kept in memory
     }
 }
 
