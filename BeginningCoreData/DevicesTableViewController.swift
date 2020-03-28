@@ -53,9 +53,18 @@ class DevicesTableViewController: UITableViewController {
         let device = devices[indexPath.row]
         cell.textLabel?.text = device.name
         cell.detailTextLabel?.text = device.deviceType
-        
+
         return cell
     }
+
+//    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+//        if let vc = storyboard?.instantiateViewController(withIdentifier: "DeviceDetail") as? DeviceDetailTableViewController {
+//            let device = devices[indexPath.row]
+//
+//            vc.device = device
+//            navigationController?.pushViewController(vc, animated: true)
+//        }
+//    }
 
     /*
      // Override to support conditional editing of the table view.
@@ -114,13 +123,21 @@ class DevicesTableViewController: UITableViewController {
         }
     }
 
-    @objc func addDevice(sender: AnyObject?) {
+    func addDevice(sender: AnyObject?) {
         performSegue(withIdentifier: "deviceDetail", sender: self)
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let dest = segue.destination as? DeviceDetailTableViewController {
             dest.managedObjectContext = managedObjectContext
+            //dest.device = Device()
+            
+            if let cell = sender as? UITableViewCell {
+                let indexPath = tableView.indexPath(for: cell)
+
+                let device = devices[indexPath!.row]
+                dest.devices = [device]
+            }
         }
     }
 }
