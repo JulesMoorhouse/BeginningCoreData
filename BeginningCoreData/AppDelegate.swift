@@ -21,30 +21,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if let tab = window?.rootViewController as? UITabBarController {
             for child in tab.viewControllers! {
             if let child = child as? UINavigationController, let top = child.topViewController {
-                if top.responds(to: Selector(("setManagedObjectContext:"))) {
+                if top.responds(to: #selector(setter: DeviceDetailTableViewController.managedObjectContext)) {
                     top.setValue(managedObjectContext, forKey: "managedObjectContext")
               }
             }
           }
         }
         
-        addTestData()
-        
-        // Instantiate fetch request
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Device")
         
         do {
-            // Get optional array and cast to managed object
-            if let results = try managedObjectContext.fetch(fetchRequest) as? [NSManagedObject] {
-                // Iterate unordered list of results
-                for result in results {
-                    if let deviceType = result.value(forKey: "deviceType") as? String, let name = result.value(forKey: "name") as? String {
-                        print("Got \(deviceType) name = \(name)")
-                    }
-                }
+            let results = try managedObjectContext.fetch(fetchRequest)
+            if results.count == 0 {
+                addTestData()
             }
         } catch {
-            print("There was a fetch error!")
+          fatalError("Error fetching data!")
         }
         
         return true
@@ -135,7 +127,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             device.setValue(i % 3 == 0 ? "Watch" : "iPhone", forKey: "deviceType")
         }
         
-        //Test data is not saved, just kept in memory.
+        saveContext()
     }
 }
 
