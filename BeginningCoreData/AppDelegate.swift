@@ -115,7 +115,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             device.setValue(i % 3 == 0 ? "Watch" : "iPhone", forKey: "deviceType")
         }
         
-        //Test data is not saved, just kept in memory
+        //Test data is not saved, just kept in memory.
     }
 }
 
