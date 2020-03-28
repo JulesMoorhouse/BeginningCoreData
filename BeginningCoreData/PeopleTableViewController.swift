@@ -7,12 +7,17 @@
 //
 
 import UIKit
+import CoreData
 
 class PeopleTableViewController: UITableViewController {
-
+    var managedObjectContext: NSManagedObjectContext!
+    var people = [NSManagedObject]()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        title = "People"
+        
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
