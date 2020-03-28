@@ -127,6 +127,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             device.setValue(i % 3 == 0 ? "Watch" : "iPhone", forKey: "deviceType")
         }
         
+        guard let personEntity =
+            NSEntityDescription.entity(forEntityName: "Person", in: managedObjectContext) else {
+                fatalError("Could not find entry description!")
+        }
+
+        let bob = NSManagedObject(entity: personEntity, insertInto: managedObjectContext)
+        bob.setValue("Bob", forKey: "name")
+        let jane = NSManagedObject(entity: personEntity, insertInto: managedObjectContext)
+        jane.setValue("Jane", forKey: "name")
+        
         saveContext()
     }
 }
