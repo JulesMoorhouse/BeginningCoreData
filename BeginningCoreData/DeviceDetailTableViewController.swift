@@ -7,8 +7,11 @@
 //
 
 import UIKit
+import CoreData
 
+@objcMembers
 class DeviceDetailTableViewController: UITableViewController {
+    var managedObjectContext: NSManagedObjectContext!
 
     override func viewDidLoad() {
         super.viewDidLoad()

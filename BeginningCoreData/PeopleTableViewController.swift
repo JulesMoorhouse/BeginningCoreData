@@ -7,17 +7,25 @@
 //
 
 import UIKit
+import CoreData
 
+@objcMembers
 class PeopleTableViewController: UITableViewController {
-
+    var managedObjectContext: NSManagedObjectContext!
+    var people = [NSManagedObject]()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        title = "People"
+        
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
+        
+        reloadData()
     }
 
     // MARK: - Table view data source
@@ -86,5 +94,17 @@ class PeopleTableViewController: UITableViewController {
         // Pass the selected object to the new view controller.
     }
     */
+    
+    func reloadData() {
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Person")
 
+      do {
+        if let results = try managedObjectContext.fetch(fetchRequest) as? [NSManagedObject] {
+          people = results
+        }
+      } catch {
+        fatalError("There was an error fetching the list of people!")
+      }
+    }
+    
 }

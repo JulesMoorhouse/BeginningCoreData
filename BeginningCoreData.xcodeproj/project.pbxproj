@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		886A9D45242D3ACB00ADF398 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 886A9D44242D3ACB00ADF398 /* AppDelegate.swift */; };
-		886A9D47242D3ACB00ADF398 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 886A9D46242D3ACB00ADF398 /* SceneDelegate.swift */; };
 		886A9D4C242D3ACB00ADF398 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 886A9D4A242D3ACB00ADF398 /* Main.storyboard */; };
 		886A9D4F242D3ACB00ADF398 /* BeginningCoreData.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 886A9D4D242D3ACB00ADF398 /* BeginningCoreData.xcdatamodeld */; };
 		886A9D51242D3ACE00ADF398 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 886A9D50242D3ACE00ADF398 /* Assets.xcassets */; };
@@ -21,7 +20,6 @@
 /* Begin PBXFileReference section */
 		886A9D41242D3ACB00ADF398 /* BeginningCoreData.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BeginningCoreData.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		886A9D44242D3ACB00ADF398 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		886A9D46242D3ACB00ADF398 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		886A9D4B242D3ACB00ADF398 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		886A9D4E242D3ACB00ADF398 /* BeginningCoreData.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = BeginningCoreData.xcdatamodel; sourceTree = "<group>"; };
 		886A9D50242D3ACE00ADF398 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -71,7 +69,6 @@
 				886A9D52242D3ACE00ADF398 /* LaunchScreen.storyboard */,
 				886A9D4A242D3ACB00ADF398 /* Main.storyboard */,
 				88D0D3DE242F560600A5AB2C /* PeopleTableViewController.swift */,
-				886A9D46242D3ACB00ADF398 /* SceneDelegate.swift */,
 			);
 			path = BeginningCoreData;
 			sourceTree = "<group>";
@@ -151,7 +148,6 @@
 				886A9D45242D3ACB00ADF398 /* AppDelegate.swift in Sources */,
 				88D0D3E1242F562D00A5AB2C /* DevicesTableViewController.swift in Sources */,
 				886A9D4F242D3ACB00ADF398 /* BeginningCoreData.xcdatamodeld in Sources */,
-				886A9D47242D3ACB00ADF398 /* SceneDelegate.swift in Sources */,
 				88D0D3DF242F560600A5AB2C /* PeopleTableViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
