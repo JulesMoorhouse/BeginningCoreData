@@ -9,6 +9,7 @@
 import UIKit
 import CoreData
 
+@objcMembers
 class PeopleTableViewController: UITableViewController {
     var managedObjectContext: NSManagedObjectContext!
     var people = [NSManagedObject]()
@@ -23,6 +24,8 @@ class PeopleTableViewController: UITableViewController {
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
+        
+        reloadData()
     }
 
     // MARK: - Table view data source
@@ -91,5 +94,17 @@ class PeopleTableViewController: UITableViewController {
         // Pass the selected object to the new view controller.
     }
     */
+    
+    func reloadData() {
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Person")
 
+      do {
+        if let results = try managedObjectContext.fetch(fetchRequest) as? [NSManagedObject] {
+          people = results
+        }
+      } catch {
+        fatalError("There was an error fetching the list of people!")
+      }
+    }
+    
 }
