@@ -12,7 +12,7 @@ import UIKit
 @objcMembers
 class PeopleTableViewController: UITableViewController {
     var managedObjectContext: NSManagedObjectContext!
-    var people = [NSManagedObject]()
+    var people = [Person]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -49,9 +49,7 @@ class PeopleTableViewController: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ruPeople", for: indexPath)
 
         let person = people[indexPath.row]
-        if let name = person.value(forKey: "name") as? String {
-            cell.textLabel?.text = name
-        }
+        cell.textLabel?.text = person.name
 
         return cell
     }
@@ -104,7 +102,7 @@ class PeopleTableViewController: UITableViewController {
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Person")
 
         do {
-            if let results = try managedObjectContext.fetch(fetchRequest) as? [NSManagedObject] {
+            if let results = try managedObjectContext.fetch(fetchRequest) as? [Person] {
                 people = results
             }
         } catch {

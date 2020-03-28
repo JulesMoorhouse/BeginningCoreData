@@ -12,7 +12,7 @@ import UIKit
 @objcMembers
 class DevicesTableViewController: UITableViewController {
     var managedObjectContext: NSManagedObjectContext!
-    var devices = [NSManagedObject]()
+    var devices = [Device]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -51,12 +51,9 @@ class DevicesTableViewController: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ruDevice", for: indexPath)
 
         let device = devices[indexPath.row]
-        if let deviceName = device.value(forKey: "name") as? String,
-            let deviceType = device.value(forKey: "deviceType") as? String {
-            cell.textLabel?.text = deviceName
-            cell.detailTextLabel?.text = deviceType
-        }
-
+        cell.textLabel?.text = device.name
+        cell.detailTextLabel?.text = device.deviceType
+        
         return cell
     }
 
@@ -109,7 +106,7 @@ class DevicesTableViewController: UITableViewController {
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Device")
 
         do {
-            if let results = try managedObjectContext.fetch(fetchRequest) as? [NSManagedObject] {
+            if let results = try managedObjectContext.fetch(fetchRequest) as? [Device] {
                 devices = results
             }
         } catch {
