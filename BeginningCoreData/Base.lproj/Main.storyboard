@@ -57,7 +57,7 @@
         <scene sceneID="eCM-Na-mCc">
             <objects>
                 <navigationController id="Tv3-AG-cbb" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Item" id="5Yr-HB-4JJ" userLabel="Device"/>
+                    <tabBarItem key="tabBarItem" title="Item" image="archivebox" catalog="system" id="5Yr-HB-4JJ" userLabel="Device"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="j22-y4-QPR">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -74,7 +74,7 @@
         <scene sceneID="WRu-ow-cAE">
             <objects>
                 <navigationController id="L9D-b1-GK8" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="People" id="iiV-K0-W1x"/>
+                    <tabBarItem key="tabBarItem" title="People" image="person.circle" catalog="system" id="iiV-K0-W1x"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="mhn-SA-hLM">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -96,12 +96,28 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="ruDevice" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="ruDevice" id="FFH-15-nLE">
-                                <rect key="frame" x="0.0" y="28" width="414" height="43.5"/>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="ruDevice" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="ruDevice" textLabel="6a5-ow-th7" detailTextLabel="Mfl-uU-hKb" style="IBUITableViewCellStyleSubtitle" id="FFH-15-nLE">
+                                <rect key="frame" x="0.0" y="28" width="414" height="55.5"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="FFH-15-nLE" id="h4h-Ov-Qfd">
-                                    <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="55.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="6a5-ow-th7">
+                                            <rect key="frame" x="20" y="10" width="33.5" height="20.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Detail" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Mfl-uU-hKb">
+                                            <rect key="frame" x="20" y="31.5" width="33" height="14.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
                                 </tableViewCellContentView>
                                 <connections>
                                     <segue destination="Ldo-Z9-STA" kind="show" identifier="deviceDetail" id="NtN-jc-Ozp"/>
@@ -149,4 +165,8 @@
             <point key="canvasLocation" x="-1684" y="753"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="archivebox" catalog="system" width="64" height="52"/>
+        <image name="person.circle" catalog="system" width="64" height="60"/>
+    </resources>
 </document>
