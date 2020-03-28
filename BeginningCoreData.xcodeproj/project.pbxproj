@@ -12,6 +12,10 @@
 		886A9D4F242D3ACB00ADF398 /* BeginningCoreData.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 886A9D4D242D3ACB00ADF398 /* BeginningCoreData.xcdatamodeld */; };
 		886A9D51242D3ACE00ADF398 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 886A9D50242D3ACE00ADF398 /* Assets.xcassets */; };
 		886A9D54242D3ACE00ADF398 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 886A9D52242D3ACE00ADF398 /* LaunchScreen.storyboard */; };
+		88BB0519242FFBDA00AE78C8 /* Person+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88BB0515242FFBDA00AE78C8 /* Person+CoreDataClass.swift */; };
+		88BB051A242FFBDA00AE78C8 /* Person+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88BB0516242FFBDA00AE78C8 /* Person+CoreDataProperties.swift */; };
+		88BB051B242FFBDA00AE78C8 /* Device+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88BB0517242FFBDA00AE78C8 /* Device+CoreDataClass.swift */; };
+		88BB051C242FFBDA00AE78C8 /* Device+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88BB0518242FFBDA00AE78C8 /* Device+CoreDataProperties.swift */; };
 		88D0D3DF242F560600A5AB2C /* PeopleTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88D0D3DE242F560600A5AB2C /* PeopleTableViewController.swift */; };
 		88D0D3E1242F562D00A5AB2C /* DevicesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88D0D3E0242F562D00A5AB2C /* DevicesTableViewController.swift */; };
 		88D0D3E3242F571000A5AB2C /* DeviceDetailTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88D0D3E2242F571000A5AB2C /* DeviceDetailTableViewController.swift */; };
@@ -25,6 +29,10 @@
 		886A9D50242D3ACE00ADF398 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		886A9D53242D3ACE00ADF398 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		886A9D55242D3ACE00ADF398 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		88BB0515242FFBDA00AE78C8 /* Person+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Person+CoreDataClass.swift"; sourceTree = "<group>"; };
+		88BB0516242FFBDA00AE78C8 /* Person+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Person+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		88BB0517242FFBDA00AE78C8 /* Device+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Device+CoreDataClass.swift"; sourceTree = "<group>"; };
+		88BB0518242FFBDA00AE78C8 /* Device+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Device+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		88D0D3DE242F560600A5AB2C /* PeopleTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeopleTableViewController.swift; sourceTree = "<group>"; };
 		88D0D3E0242F562D00A5AB2C /* DevicesTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DevicesTableViewController.swift; sourceTree = "<group>"; };
 		88D0D3E2242F571000A5AB2C /* DeviceDetailTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceDetailTableViewController.swift; sourceTree = "<group>"; };
@@ -60,6 +68,10 @@
 		886A9D43242D3ACB00ADF398 /* BeginningCoreData */ = {
 			isa = PBXGroup;
 			children = (
+				88BB0515242FFBDA00AE78C8 /* Person+CoreDataClass.swift */,
+				88BB0516242FFBDA00AE78C8 /* Person+CoreDataProperties.swift */,
+				88BB0517242FFBDA00AE78C8 /* Device+CoreDataClass.swift */,
+				88BB0518242FFBDA00AE78C8 /* Device+CoreDataProperties.swift */,
 				886A9D44242D3ACB00ADF398 /* AppDelegate.swift */,
 				886A9D50242D3ACE00ADF398 /* Assets.xcassets */,
 				886A9D4D242D3ACB00ADF398 /* BeginningCoreData.xcdatamodeld */,
@@ -144,8 +156,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				88BB051A242FFBDA00AE78C8 /* Person+CoreDataProperties.swift in Sources */,
+				88BB051C242FFBDA00AE78C8 /* Device+CoreDataProperties.swift in Sources */,
+				88BB051B242FFBDA00AE78C8 /* Device+CoreDataClass.swift in Sources */,
 				88D0D3E3242F571000A5AB2C /* DeviceDetailTableViewController.swift in Sources */,
 				886A9D45242D3ACB00ADF398 /* AppDelegate.swift in Sources */,
+				88BB0519242FFBDA00AE78C8 /* Person+CoreDataClass.swift in Sources */,
 				88D0D3E1242F562D00A5AB2C /* DevicesTableViewController.swift in Sources */,
 				886A9D4F242D3ACB00ADF398 /* BeginningCoreData.xcdatamodeld in Sources */,
 				88D0D3DF242F560600A5AB2C /* PeopleTableViewController.swift in Sources */,
