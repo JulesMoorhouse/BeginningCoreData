@@ -18,6 +18,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         let managedObjectContext = persistentContainer.viewContext
         
+        // Pass managedObjectContext down the view stack
         if let tab = window?.rootViewController as? UITabBarController {
             for child in tab.viewControllers! {
             if let child = child as? UINavigationController, let top = child.topViewController {
@@ -32,6 +33,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         do {
             let results = try managedObjectContext.fetch(fetchRequest)
+            // If no fetched records add test data
             if results.count == 0 {
                 addTestData()
             }
@@ -120,11 +122,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         for i in 1...25 {
             // Create an instance of the managed object and set properties into the context
-            let device = NSManagedObject(entity: entity, insertInto: managedObjectContext)
+            let device = Device(entity: entity, insertInto: managedObjectContext)
             
             // Add test data values
-            device.setValue("Some Device #\(i)", forKey: "name")
-            device.setValue(i % 3 == 0 ? "Watch" : "iPhone", forKey: "deviceType")
+            device.name = "Some Device #\(i)"
+            device.deviceType = (i % 3 == 0) ? "Watch" : "iPhone"
         }
         
         guard let personEntity =
@@ -132,10 +134,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 fatalError("Could not find entry description!")
         }
 
-        let bob = NSManagedObject(entity: personEntity, insertInto: managedObjectContext)
-        bob.setValue("Bob", forKey: "name")
-        let jane = NSManagedObject(entity: personEntity, insertInto: managedObjectContext)
-        jane.setValue("Jane", forKey: "name")
+        let bob = Person(entity: personEntity, insertInto: managedObjectContext)
+        bob.name = "Bob"
+        let jane = Person(entity: personEntity, insertInto: managedObjectContext)
+        jane.name = "Jane"
         
         saveContext()
     }
