@@ -3,12 +3,14 @@
     <entity name="Device" representedClassName="Device" syncable="YES">
         <attribute name="deviceType" attributeType="String"/>
         <attribute name="name" attributeType="String"/>
+        <relationship name="owner" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Person" inverseName="devices" inverseEntity="Person"/>
     </entity>
     <entity name="Person" representedClassName="Person" syncable="YES">
         <attribute name="name" attributeType="String"/>
+        <relationship name="devices" toMany="YES" deletionRule="Nullify" destinationEntity="Device" inverseName="owner" inverseEntity="Device"/>
     </entity>
     <elements>
-        <element name="Device" positionX="-63" positionY="-18" width="128" height="73"/>
-        <element name="Person" positionX="-63" positionY="0" width="128" height="58"/>
+        <element name="Device" positionX="-63" positionY="-18" width="128" height="88"/>
+        <element name="Person" positionX="-63" positionY="0" width="128" height="73"/>
     </elements>
 </model>
