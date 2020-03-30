@@ -51,6 +51,12 @@ class PeopleTableViewController: UITableViewController {
         let person = people[indexPath.row]
         cell.textLabel?.text = person.name
 
+        if selectedPerson == person {
+            cell.accessoryType = .checkmark
+        } else {
+            cell.accessoryType = .none
+        }
+        
         return cell
     }
     

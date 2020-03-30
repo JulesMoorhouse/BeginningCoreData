@@ -21,6 +21,8 @@ class DeviceDetailTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        title = "Detail"
+
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
@@ -40,7 +42,7 @@ class DeviceDetailTableViewController: UITableViewController {
             if let owner = device.owner {
                 deviceOwnerLabel.text = "Device owner: \(owner.name)"
             } else {
-                deviceOwnerLabel.text = "set device owner"
+                deviceOwnerLabel.text = "Set Device Owner"
             }
         }
     }
