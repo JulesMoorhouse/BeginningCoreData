@@ -15,7 +15,7 @@ protocol PersonPickerDelegate: class {
 
 @objcMembers
 class PeopleTableViewController: UITableViewController {
-    var managedObjectContext: NSManagedObjectContext!
+    var coreDataStack: CoreDataStack!
     var people = [Person]()
 
     // for person select mode
@@ -115,7 +115,7 @@ class PeopleTableViewController: UITableViewController {
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Person")
 
         do {
-            if let results = try managedObjectContext.fetch(fetchRequest) as? [Person] {
+            if let results = try coreDataStack.managedObjectContext.fetch(fetchRequest) as? [Person] {
                 people = results
             }
         } catch {

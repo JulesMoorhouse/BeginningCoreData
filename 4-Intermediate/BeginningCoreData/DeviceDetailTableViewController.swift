@@ -11,7 +11,7 @@ import UIKit
 
 @objcMembers
 class DeviceDetailTableViewController: UITableViewController {
-    var managedObjectContext: NSManagedObjectContext!
+    var coreDataStack: CoreDataStack!
     var device: Device?
 
     @IBOutlet weak var nameTextField: UITextField!
@@ -50,9 +50,9 @@ class DeviceDetailTableViewController: UITableViewController {
     override func viewWillDisappear(_ animated: Bool) {
         // need to add a device?
         if device == nil {
-            if let name = nameTextField.text, let deviceType = deviceTypeTextField.text, let entity = NSEntityDescription.entity(forEntityName: "Device", in: managedObjectContext), !name.isEmpty,
+            if let name = nameTextField.text, let deviceType = deviceTypeTextField.text, let entity = NSEntityDescription.entity(forEntityName: "Device", in: coreDataStack.managedObjectContext), !name.isEmpty,
                 !deviceType.isEmpty {
-                device = Device(entity: entity, insertInto: managedObjectContext)
+                device = Device(entity: entity, insertInto: coreDataStack.managedObjectContext)
                 device?.name = name
                 device?.deviceType = deviceType
             }
@@ -127,7 +127,7 @@ class DeviceDetailTableViewController: UITableViewController {
                 // more personPicker setup code here
                 personPicker.pickerDelegate = self
                 personPicker.selectedPerson = device?.owner
-                personPicker.managedObjectContext = managedObjectContext
+                personPicker.coreDataStack = coreDataStack
                 
                 navigationController?.pushViewController(personPicker, animated: true)
             }
@@ -151,10 +151,6 @@ extension DeviceDetailTableViewController: PersonPickerDelegate {
     func didSelectPerson(person: Person) {
         device?.owner = person
         
-        do {
-            try managedObjectContext.save()
-        } catch {
-            print("Error saving the managed object context!")
-        }
+        coreDataStack.saveMainContext()
     }
 }

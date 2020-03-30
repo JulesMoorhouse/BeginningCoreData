@@ -12,16 +12,17 @@ import UIKit
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
-
+    lazy var coreDataStack = CoreDataStack()
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
 
-        // Pass managedObjectContext down the view stack
+        // Pass coreDataStack down the view stack
         if let tab = window?.rootViewController as? UITabBarController {
             for child in tab.viewControllers! {
                 if let child = child as? UINavigationController, let top = child.topViewController {
-                    if top.responds(to: #selector(setter: DeviceDetailTableViewController.managedObjectContext)) {
-                        top.setValue(managedObjectContext, forKey: "managedObjectContext")
+                    if top.responds(to: #selector(setter: DeviceDetailTableViewController.coreDataStack)) {
+                        top.setValue(coreDataStack, forKey: "coreDataStack")
                     }
                 }
             }
@@ -30,7 +31,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Device")
 
         do {
-            let results = try managedObjectContext.fetch(fetchRequest)
+            let results = try coreDataStack.managedObjectContext.fetch(fetchRequest)
             // If no fetched records add test data
             if results.count == 0 {
                 addTestData()
@@ -62,89 +63,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationWillTerminate(_ application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
-    }
-
-    // MARK: - Core Data stack
-
-    lazy var managedObjectModel: NSManagedObjectModel = {
-        // This resource is the same name as your xcdatamodeld contained in your project
-        guard let modelURL =
-            Bundle.main.url(forResource: "BeginningCoreData", withExtension: "momd") else {
-                fatalError("Error loading model from bundle")
-            }
-
-        // The managed object model for the application. It is a fatal error for the application not to be able to find and load its model.
-        guard let mom = NSManagedObjectModel(contentsOf: modelURL) else {
-            fatalError("Error initializing mom from: \(modelURL)")
-        }
-        
-        return mom
-    }()
-
-    lazy var persistentStoreCoordinator: NSPersistentStoreCoordinator = {
-        let coordinator = NSPersistentStoreCoordinator(managedObjectModel: self.managedObjectModel)
-
-        let fileManager = FileManager.default
-
-        guard let docURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).last else {
-            fatalError("Unable to resolve document directory")
-        }
-        
-        let storeURL = docURL.appendingPathComponent("SingleViewCoreData.sqlite")
-
-        var failureReason = "There was an error creating or loading the application's saved data."
-
-        do {
-            let options = [NSMigratePersistentStoresAutomaticallyOption: true, NSInferMappingModelAutomaticallyOption: true]
-
-            try coordinator.addPersistentStore(ofType: NSSQLiteStoreType,
-                                               configurationName: nil,
-                                               at: storeURL,
-                                               options: options)
-        } catch {
-            var dict = [String: AnyObject]()
-            dict[NSLocalizedDescriptionKey] = "Failed to initialize the application's saved data" as AnyObject
-            dict[NSUnderlyingErrorKey] = error as NSError
-            let wrappedError = NSError(domain:
-                "YOUR_ERROR_DOMAIN", code: 9999, userInfo: dict)
-
-            NSLog("Unresolved error \(wrappedError), \(wrappedError.userInfo)")
-            abort()
-        }
-        return coordinator
-    }()
-
-    lazy var managedObjectContext: NSManagedObjectContext = {
-        let context = NSManagedObjectContext(concurrencyType: .mainQueueConcurrencyType)
-        context.persistentStoreCoordinator = self.persistentStoreCoordinator
-        return context
-    }()
-
-    // MARK: - Core Data Saving support
-
-    func saveContext() {
-        if managedObjectContext.hasChanges {
-            do {
-                try managedObjectContext.save()
-            } catch {
-                // Replace this implementation with code to handle the error appropriately.
-                // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-                let nserror = error as NSError
-                fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
-            }
-        }
+        coreDataStack.saveMainContext()
     }
 
     func addTestData() {
         // Reference to Core Data Device entity
         guard let entity =
-            NSEntityDescription.entity(forEntityName: "Device", in: managedObjectContext) else {
+            NSEntityDescription.entity(forEntityName: "Device", in: coreDataStack.managedObjectContext) else {
             fatalError("Could not find entry description!")
         }
 
         for i in 1...25 {
             // Create an instance of the managed object and set properties into the context
-            let device = Device(entity: entity, insertInto: managedObjectContext)
+            let device = Device(entity: entity, insertInto: coreDataStack.managedObjectContext)
 
             // Add test data values
             device.name = "Some Device #\(i)"
@@ -152,15 +83,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
 
         guard let personEntity =
-            NSEntityDescription.entity(forEntityName: "Person", in: managedObjectContext) else {
+            NSEntityDescription.entity(forEntityName: "Person", in: coreDataStack.managedObjectContext) else {
             fatalError("Could not find entry description!")
         }
 
-        let bob = Person(entity: personEntity, insertInto: managedObjectContext)
+        let bob = Person(entity: personEntity, insertInto: coreDataStack.managedObjectContext)
         bob.name = "Bob"
-        let jane = Person(entity: personEntity, insertInto: managedObjectContext)
+        let jane = Person(entity: personEntity, insertInto: coreDataStack.managedObjectContext)
         jane.name = "Jane"
 
-        saveContext()
+        coreDataStack.saveMainContext()
     }
 }

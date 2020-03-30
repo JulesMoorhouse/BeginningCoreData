@@ -11,7 +11,7 @@ import UIKit
 
 @objcMembers
 class DevicesTableViewController: UITableViewController {
-    var managedObjectContext: NSManagedObjectContext!
+    var coreDataStack: CoreDataStack!
     var devices = [Device]()
 
     override func viewDidLoad() {
@@ -107,7 +107,7 @@ class DevicesTableViewController: UITableViewController {
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Device")
 
         do {
-            if let results = try managedObjectContext.fetch(fetchRequest) as? [Device] {
+            if let results = try coreDataStack.managedObjectContext.fetch(fetchRequest) as? [Device] {
                 devices = results
             }
         } catch {
@@ -121,7 +121,7 @@ class DevicesTableViewController: UITableViewController {
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let dest = segue.destination as? DeviceDetailTableViewController {
-            dest.managedObjectContext = managedObjectContext
+            dest.coreDataStack = coreDataStack
             //dest.device = Device()
             
             if let cell = sender as? UITableViewCell {

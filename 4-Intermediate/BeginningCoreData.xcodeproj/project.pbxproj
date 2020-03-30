@@ -19,6 +19,7 @@
 		88D0D3DF242F560600A5AB2C /* PeopleTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88D0D3DE242F560600A5AB2C /* PeopleTableViewController.swift */; };
 		88D0D3E1242F562D00A5AB2C /* DevicesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88D0D3E0242F562D00A5AB2C /* DevicesTableViewController.swift */; };
 		88D0D3E3242F571000A5AB2C /* DeviceDetailTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88D0D3E2242F571000A5AB2C /* DeviceDetailTableViewController.swift */; };
+		88DD86F2243280FC0023469D /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88DD86F1243280FC0023469D /* CoreDataStack.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,6 +37,7 @@
 		88D0D3DE242F560600A5AB2C /* PeopleTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeopleTableViewController.swift; sourceTree = "<group>"; };
 		88D0D3E0242F562D00A5AB2C /* DevicesTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DevicesTableViewController.swift; sourceTree = "<group>"; };
 		88D0D3E2242F571000A5AB2C /* DeviceDetailTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceDetailTableViewController.swift; sourceTree = "<group>"; };
+		88DD86F1243280FC0023469D /* CoreDataStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataStack.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -68,19 +70,20 @@
 		886A9D43242D3ACB00ADF398 /* BeginningCoreData */ = {
 			isa = PBXGroup;
 			children = (
-				88BB0515242FFBDA00AE78C8 /* Person+CoreDataClass.swift */,
-				88BB0516242FFBDA00AE78C8 /* Person+CoreDataProperties.swift */,
-				88BB0517242FFBDA00AE78C8 /* Device+CoreDataClass.swift */,
-				88BB0518242FFBDA00AE78C8 /* Device+CoreDataProperties.swift */,
 				886A9D44242D3ACB00ADF398 /* AppDelegate.swift */,
 				886A9D50242D3ACE00ADF398 /* Assets.xcassets */,
 				886A9D4D242D3ACB00ADF398 /* BeginningCoreData.xcdatamodeld */,
+				88DD86F1243280FC0023469D /* CoreDataStack.swift */,
+				88BB0517242FFBDA00AE78C8 /* Device+CoreDataClass.swift */,
+				88BB0518242FFBDA00AE78C8 /* Device+CoreDataProperties.swift */,
 				88D0D3E2242F571000A5AB2C /* DeviceDetailTableViewController.swift */,
 				88D0D3E0242F562D00A5AB2C /* DevicesTableViewController.swift */,
 				886A9D55242D3ACE00ADF398 /* Info.plist */,
 				886A9D52242D3ACE00ADF398 /* LaunchScreen.storyboard */,
 				886A9D4A242D3ACB00ADF398 /* Main.storyboard */,
 				88D0D3DE242F560600A5AB2C /* PeopleTableViewController.swift */,
+				88BB0515242FFBDA00AE78C8 /* Person+CoreDataClass.swift */,
+				88BB0516242FFBDA00AE78C8 /* Person+CoreDataProperties.swift */,
 			);
 			path = BeginningCoreData;
 			sourceTree = "<group>";
@@ -161,6 +164,7 @@
 				88BB051B242FFBDA00AE78C8 /* Device+CoreDataClass.swift in Sources */,
 				88D0D3E3242F571000A5AB2C /* DeviceDetailTableViewController.swift in Sources */,
 				886A9D45242D3ACB00ADF398 /* AppDelegate.swift in Sources */,
+				88DD86F2243280FC0023469D /* CoreDataStack.swift in Sources */,
 				88BB0519242FFBDA00AE78C8 /* Person+CoreDataClass.swift in Sources */,
 				88D0D3E1242F562D00A5AB2C /* DevicesTableViewController.swift in Sources */,
 				886A9D4F242D3ACB00ADF398 /* BeginningCoreData.xcdatamodeld in Sources */,
