@@ -13,4 +13,8 @@ import CoreData
 @objc(Device)
 public class Device: NSManagedObject {
 
+    var deviceDescription: String {
+      return "\(name) (\(deviceType))"
+    }
+
 }

@@ -9,10 +9,18 @@
 import CoreData
 import UIKit
 
+protocol PersonPickerDelegate: class {
+  func didSelectPerson(person: Person)
+}
+
 @objcMembers
 class PeopleTableViewController: UITableViewController {
     var managedObjectContext: NSManagedObjectContext!
     var people = [Person]()
+
+    // for person select mode
+    weak var pickerDelegate: PersonPickerDelegate?
+    var selectedPerson: Person?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -44,6 +52,13 @@ class PeopleTableViewController: UITableViewController {
         cell.textLabel?.text = person.name
 
         return cell
+    }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let person = people[indexPath.row]
+        selectedPerson = person
+        pickerDelegate?.didSelectPerson(person: person)
+        navigationController?.popViewController(animated: true)
     }
     /*
      // Override to support conditional editing of the table view.

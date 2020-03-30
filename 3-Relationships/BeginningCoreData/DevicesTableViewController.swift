@@ -128,7 +128,7 @@ class DevicesTableViewController: UITableViewController {
                 let indexPath = tableView.indexPath(for: cell)
 
                 let device = devices[indexPath!.row]
-                dest.devices = [device]
+                dest.device = device
             }
         }
     }

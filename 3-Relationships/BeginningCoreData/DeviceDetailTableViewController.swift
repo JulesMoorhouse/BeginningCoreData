@@ -12,7 +12,11 @@ import UIKit
 @objcMembers
 class DeviceDetailTableViewController: UITableViewController {
     var managedObjectContext: NSManagedObjectContext!
-    var devices = [Device]()
+    var device: Device?
+
+    @IBOutlet weak var nameTextField: UITextField!
+    @IBOutlet weak var deviceTypeTextField: UITextField!
+    @IBOutlet weak var deviceOwnerLabel: UILabel!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,32 +28,61 @@ class DeviceDetailTableViewController: UITableViewController {
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+
+        if let device = self.device {
+            print(device.name)
+            
+            nameTextField.text = device.name
+            deviceTypeTextField.text = device.deviceType
+
+            if let owner = device.owner {
+                deviceOwnerLabel.text = "Device owner: \(owner.name)"
+            } else {
+                deviceOwnerLabel.text = "set device owner"
+            }
+        }
+    }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        // need to add a device?
+        if device == nil {
+            if let name = nameTextField.text, let deviceType = deviceTypeTextField.text, let entity = NSEntityDescription.entity(forEntityName: "Device", in: managedObjectContext), !name.isEmpty,
+                !deviceType.isEmpty {
+                device = Device(entity: entity, insertInto: managedObjectContext)
+                device?.name = name
+                device?.deviceType = deviceType
+            }
+        }
+    }
+
     // MARK: - Table view data source
 
-    override func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
-    }
-
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 3
-    }
-
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "ruDetail", for: indexPath)
-
-        if indexPath.row == 0 {
-            cell.textLabel?.text = "Device name"
-            cell.detailTextLabel?.text = devices.count > 0 ? devices[0].name : ""
-        } else if indexPath.row == 1 {
-            cell.textLabel?.text = "Device type"
-            cell.detailTextLabel?.text = devices.count > 0 ? devices[0].deviceType : ""
-        } else if indexPath.row == 2 {
-            cell.textLabel?.text = "Device Owner"
-            cell.detailTextLabel?.text = "?"
-        }
-
-        return cell
-    }
+//    override func numberOfSections(in tableView: UITableView) -> Int {
+//        return 1
+//    }
+//
+//    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+//        return 3
+//    }
+//
+//    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+//        let cell = tableView.dequeueReusableCell(withIdentifier: "ruDetail", for: indexPath)
+//
+//        if indexPath.row == 0 {
+//            cell.textLabel?.text = "Device name"
+//            cell.detailTextLabel?.text = device?.name
+//        } else if indexPath.row == 1 {
+//            cell.textLabel?.text = "Device type"
+//            cell.detailTextLabel?.text = device?.deviceType
+//        } else if indexPath.row == 2 {
+//            cell.textLabel?.text = "Device Owner"
+//            cell.detailTextLabel?.text = "?"
+//        }
+//
+//        return cell
+//    }
 
     /*
      // Override to support conditional editing of the table view.
@@ -86,6 +119,21 @@ class DeviceDetailTableViewController: UITableViewController {
      }
      */
 
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if indexPath.section == 0, indexPath.row == 2 {
+            if let personPicker = storyboard?.instantiateViewController(identifier: "People") as? PeopleTableViewController {
+                // more personPicker setup code here
+                personPicker.pickerDelegate = self
+                personPicker.selectedPerson = device?.owner
+                personPicker.managedObjectContext = managedObjectContext
+                
+                navigationController?.pushViewController(personPicker, animated: true)
+            }
+        }
+        
+        tableView.deselectRow(at: indexPath, animated: true)
+    }
+
     /*
      // MARK: - Navigation
 
@@ -95,4 +143,16 @@ class DeviceDetailTableViewController: UITableViewController {
          // Pass the selected object to the new view controller.
      }
      */
+}
+
+extension DeviceDetailTableViewController: PersonPickerDelegate {
+    func didSelectPerson(person: Person) {
+        device?.owner = person
+        
+        do {
+            try managedObjectContext.save()
+        } catch {
+            print("Error saving the managed object context!")
+        }
+    }
 }
