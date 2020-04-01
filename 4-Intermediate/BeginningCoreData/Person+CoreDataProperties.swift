@@ -2,7 +2,7 @@
 //  Person+CoreDataProperties.swift
 //  BeginningCoreData
 //
-//  Created by Julian Moorhouse on 29/03/2020.
+//  Created by Julian Moorhouse on 30/03/2020.
 //  Copyright © 2020 Mindwarp Consultancy Ltd. All rights reserved.
 //
 //

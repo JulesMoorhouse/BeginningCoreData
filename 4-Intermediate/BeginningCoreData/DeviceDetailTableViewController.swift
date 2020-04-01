@@ -17,10 +17,26 @@ class DeviceDetailTableViewController: UITableViewController {
     @IBOutlet weak var nameTextField: UITextField!
     @IBOutlet weak var deviceTypeTextField: UITextField!
     @IBOutlet weak var deviceOwnerLabel: UILabel!
+    @IBOutlet weak var deviceIdentifierTextField: UITextField!
+    @IBOutlet weak var purchaseDateTextField: UITextField!
 
+    private let datePicker = UIDatePicker()
+    private var selectedDate: NSDate?
+    private lazy var dateFormatter: DateFormatter = {
+        let df = DateFormatter()
+        df.timeStyle = DateFormatter.Style.none
+        df.dateStyle = DateFormatter.Style.medium
+        
+        return df
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        datePicker.addTarget(self, action: #selector(datePickerValueChanged), for: .valueChanged)
+        datePicker.datePickerMode = .date
+        purchaseDateTextField.inputView = datePicker
+        
         title = "Detail"
 
         // Uncomment the following line to preserve selection between presentations
@@ -44,19 +60,41 @@ class DeviceDetailTableViewController: UITableViewController {
             } else {
                 deviceOwnerLabel.text = "Set Device Owner"
             }
+            
+            if let purchaseDate = device.purchaseDate {
+                selectedDate = purchaseDate as NSDate
+                datePicker.date = purchaseDate
+                purchaseDateTextField.text = dateFormatter.string(from: purchaseDate)
+
+            }
         }
     }
 
     override func viewWillDisappear(_ animated: Bool) {
-        // need to add a device?
-        if device == nil {
-            if let name = nameTextField.text, let deviceType = deviceTypeTextField.text, let entity = NSEntityDescription.entity(forEntityName: "Device", in: coreDataStack.managedObjectContext), !name.isEmpty,
+        if let device = device,
+            let name = nameTextField.text,
+            let deviceType = deviceTypeTextField.text,
+            let deviceId = deviceIdentifierTextField.text {
+            device.name = name
+            device.deviceType = deviceType
+            device.deviceID = deviceId
+            device.purchaseDate = selectedDate as Date?
+        } else if device == nil {
+            if let name = nameTextField.text,
+                let deviceType = deviceTypeTextField.text,
+                let deviceId = deviceIdentifierTextField.text,
+                let entity = NSEntityDescription.entity(forEntityName: "Device", in: coreDataStack.managedObjectContext),
+                !name.isEmpty,
                 !deviceType.isEmpty {
                 device = Device(entity: entity, insertInto: coreDataStack.managedObjectContext)
                 device?.name = name
                 device?.deviceType = deviceType
+                device?.deviceID = deviceId
+                device?.purchaseDate = selectedDate! as Date
             }
         }
+        
+        coreDataStack.saveMainContext()
     }
 
     // MARK: - Table view data source
@@ -122,7 +160,7 @@ class DeviceDetailTableViewController: UITableViewController {
      */
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if indexPath.section == 0, indexPath.row == 2 {
+        if indexPath.section == 0, indexPath.row == 4 {
             if let personPicker = storyboard?.instantiateViewController(identifier: "People") as? PeopleTableViewController {
                 // more personPicker setup code here
                 personPicker.pickerDelegate = self
@@ -136,6 +174,10 @@ class DeviceDetailTableViewController: UITableViewController {
         tableView.deselectRow(at: indexPath, animated: true)
     }
 
+    func datePickerValueChanged(datePicker: UIDatePicker) {
+        purchaseDateTextField.text = dateFormatter.string(from: datePicker.date)
+        selectedDate = dateFormatter.date(from: purchaseDateTextField.text!) as NSDate?
+    }
     /*
      // MARK: - Navigation
 

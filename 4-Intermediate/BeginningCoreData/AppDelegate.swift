@@ -13,7 +13,7 @@ import UIKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
     lazy var coreDataStack = CoreDataStack()
-    
+
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
 
@@ -21,7 +21,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if let tab = window?.rootViewController as? UITabBarController {
             for child in tab.viewControllers! {
                 if let child = child as? UINavigationController, let top = child.topViewController {
-                    if top.responds(to: #selector(setter: DeviceDetailTableViewController.coreDataStack)) {
+                    if top.responds(to: Selector(("coreDataStack"))) {
                         top.setValue(coreDataStack, forKey: "coreDataStack")
                     }
                 }

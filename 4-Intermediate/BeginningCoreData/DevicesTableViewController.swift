@@ -14,19 +14,28 @@ class DevicesTableViewController: UITableViewController {
     var coreDataStack: CoreDataStack!
     var devices = [Device]()
 
+    var selectedPerson: Person?
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        title = "Devices"
+        if let selectedPerson = self.selectedPerson {
+            title = "\(selectedPerson.name)'s Devices"
+        } else {
+            title = "Devices"
 
-        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addDevice(sender:)))
+            navigationItem.rightBarButtonItems = [
+                UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addDevice(sender:))),
+                UIBarButtonItem(title: "Filter", style: .plain, target: self, action: #selector(selectFilter(sender:))),
+            ]
+        }
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
         reloadData()
-        tableView.reloadData()
+        // tbc tableView.reloadData()
     }
 
     // MARK: - Table view data source
@@ -43,8 +52,9 @@ class DevicesTableViewController: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ruDevice", for: indexPath)
 
         let device = devices[indexPath.row]
-        cell.textLabel?.text = device.name
-        cell.detailTextLabel?.text = device.deviceType
+        
+        cell.textLabel?.text = device.deviceDescription
+        cell.detailTextLabel?.text = "(owner name goes here)"
 
         return cell
     }
@@ -103,31 +113,78 @@ class DevicesTableViewController: UITableViewController {
      }
      */
 
-    func reloadData() {
-        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Device")
-
-        do {
-            if let results = try coreDataStack.managedObjectContext.fetch(fetchRequest) as? [Device] {
-                devices = results
+    func reloadData(predicate: NSPredicate? = nil) {
+        if let selectedPerson = selectedPerson {
+            if let personDevices = selectedPerson.devices?.allObjects as? [Device] {
+                devices = personDevices
             }
-        } catch {
-            fatalError("There was an error fetching the list of devices!")
+        } else {
+            let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Device")
+            fetchRequest.predicate = predicate
+
+            fetchRequest.sortDescriptors = [
+                NSSortDescriptor(key: "deviceType", ascending: true),
+                NSSortDescriptor(key: "name", ascending: true),
+            ]
+
+            do {
+                if let results = try coreDataStack.managedObjectContext.fetch(fetchRequest) as? [Device] {
+                    devices = results
+                }
+            } catch {
+                fatalError("There was an error fetching the list of devices!")
+            }
         }
+        
+        tableView.reloadData()
     }
 
     func addDevice(sender: AnyObject?) {
         performSegue(withIdentifier: "deviceDetail", sender: self)
     }
 
+    func selectFilter(sender: AnyObject?) {
+        let sheet = UIAlertController(title: "Filter Options", message: nil, preferredStyle: .actionSheet)
+        
+        sheet.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        
+        sheet.addAction(UIAlertAction(title: "Show All", style: .default, handler: {
+            (action) -> Void in
+            self.reloadData()
+        }))
+
+        sheet.addAction(UIAlertAction(title: "Only Owned Devices", style: .default, handler: {
+            (action) -> Void in
+            self.reloadData(predicate: NSPredicate(format: "owner != nil"))
+        }))
+        
+        sheet.addAction(UIAlertAction(title: "Only Phones", style: .default, handler: {
+            (action) -> Void in
+            self.reloadData(predicate: NSPredicate(format: "deviceType =[c] 'iphone'"))
+        }))
+
+        sheet.addAction(UIAlertAction(title: "Only Watches", style: .default, handler: {
+            (action) -> Void in
+            self.reloadData(predicate: NSPredicate(format: "deviceType =[c] 'watch'"))
+        }))
+        
+        present(sheet, animated: true, completion: nil)
+    }
+
+    override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
+        if selectedPerson != nil && identifier == "deviceDetail" {
+            return false
+        }
+        
+        return true
+    }
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let dest = segue.destination as? DeviceDetailTableViewController {
             dest.coreDataStack = coreDataStack
-            //dest.device = Device()
-            
-            if let cell = sender as? UITableViewCell {
-                let indexPath = tableView.indexPath(for: cell)
 
-                let device = devices[indexPath!.row]
+            if let selectedIndexPath = tableView.indexPathForSelectedRow {
+                let device = devices[selectedIndexPath.row]
                 dest.device = device
             }
         }
