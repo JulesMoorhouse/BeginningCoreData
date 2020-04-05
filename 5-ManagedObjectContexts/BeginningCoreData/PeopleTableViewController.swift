@@ -85,6 +85,7 @@ class PeopleTableViewController: UITableViewController {
     // Override to support conditional editing of the table view.
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         // Return false if you do not want the specified item to be editable.
+        // If we've set the a delgate we're assigning an owner / detail view
         return pickerDelegate == nil
     }
 
@@ -92,8 +93,8 @@ class PeopleTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             let person = people[indexPath.row]
-            coreDataStack.managedObjectContext.delete(person)
             // Delete the row from the data source
+            coreDataStack.managedObjectContext.delete(person)
             reloadData()
         } else if editingStyle == .insert {
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
