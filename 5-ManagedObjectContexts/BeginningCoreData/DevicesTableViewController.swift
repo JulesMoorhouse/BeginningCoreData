@@ -115,7 +115,7 @@ class DevicesTableViewController: UITableViewController {
 
     func reloadData(predicate: NSPredicate? = nil) {
         if let selectedPerson = selectedPerson {
-            if let personDevices = selectedPerson.devices?.allObjects as? [Device] {
+            if let personDevices = selectedPerson.devices.allObjects as? [Device] {
                 devices = personDevices
             }
         } else {
@@ -160,12 +160,12 @@ class DevicesTableViewController: UITableViewController {
         
         sheet.addAction(UIAlertAction(title: "Only Phones", style: .default, handler: {
             (action) -> Void in
-            self.reloadData(predicate: NSPredicate(format: "deviceType =[c] 'iphone'"))
+            self.reloadData(predicate: NSPredicate(format: "deviceType.name =[c] 'iphone'"))
         }))
 
         sheet.addAction(UIAlertAction(title: "Only Watches", style: .default, handler: {
             (action) -> Void in
-            self.reloadData(predicate: NSPredicate(format: "deviceType =[c] 'watch'"))
+            self.reloadData(predicate: NSPredicate(format: "deviceType.name =[c] 'watch'"))
         }))
         
         present(sheet, animated: true, completion: nil)
@@ -185,7 +185,7 @@ class DevicesTableViewController: UITableViewController {
 
             if let selectedIndexPath = tableView.indexPathForSelectedRow {
                 let device = devices[selectedIndexPath.row]
-                dest.device = device
+                dest.pDevice = device
             }
         }
     }

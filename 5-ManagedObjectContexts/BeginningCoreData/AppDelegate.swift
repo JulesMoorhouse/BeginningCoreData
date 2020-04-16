@@ -21,7 +21,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if let tab = window?.rootViewController as? UITabBarController {
             for child in tab.viewControllers! {
                 if let child = child as? UINavigationController, let top = child.topViewController {
-                    if top.responds(to: Selector(("coreDataStack"))) {
+                    let sel = Selector.init(("coreDataStack"))
+                    if top.responds(to: (sel)) {
                         top.setValue(coreDataStack, forKey: "coreDataStack")
                     }
                 }
@@ -67,25 +68,27 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func addTestData() {
-        // Reference to Core Data Device entity
-        guard let entity =
-            NSEntityDescription.entity(forEntityName: "Device", in: coreDataStack.managedObjectContext) else {
-            fatalError("Could not find entry description!")
-        }
 
+        guard let entity = NSEntityDescription.entity(forEntityName: "Device", in: coreDataStack.managedObjectContext),
+            let personEntity = NSEntityDescription.entity(forEntityName: "Person", in: coreDataStack.managedObjectContext),
+            let deviceTypeEntity = NSEntityDescription.entity(forEntityName: "DeviceType", in: coreDataStack.managedObjectContext) else {
+          fatalError("Could not find entity descriptions!")
+        }
+        
+        let phoneDeviceType = DeviceType(entity: deviceTypeEntity, insertInto: coreDataStack.managedObjectContext)
+        phoneDeviceType.name = "iPhone"
+        let watchDeviceType = DeviceType(entity: deviceTypeEntity, insertInto: coreDataStack.managedObjectContext)
+        watchDeviceType.name = "Watch"
+        
         for i in 1...25 {
             // Create an instance of the managed object and set properties into the context
             let device = Device(entity: entity, insertInto: coreDataStack.managedObjectContext)
 
             // Add test data values
             device.name = "Some Device #\(i)"
-            device.deviceType = (i % 3 == 0) ? "Watch" : "iPhone"
+            device.deviceType = (i % 3 == 0) ? watchDeviceType : phoneDeviceType
         }
 
-        guard let personEntity =
-            NSEntityDescription.entity(forEntityName: "Person", in: coreDataStack.managedObjectContext) else {
-            fatalError("Could not find entry description!")
-        }
 
         let bob = Person(entity: personEntity, insertInto: coreDataStack.managedObjectContext)
         bob.name = "Bob"

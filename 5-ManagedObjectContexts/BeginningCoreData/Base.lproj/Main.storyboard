@@ -161,14 +161,18 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="VxX-mG-MVJ" style="IBUITableViewCellStyleDefault" id="oE6-Gl-GJA">
-                                        <rect key="frame" x="0.0" y="204" width="414" height="43.5"/>
+                                </cells>
+                            </tableViewSection>
+                            <tableViewSection id="gH9-gS-Fgu">
+                                <cells>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="fWA-tc-hnh" style="IBUITableViewCellStyleDefault" id="r9r-3r-zCl">
+                                        <rect key="frame" x="0.0" y="260" width="414" height="43.5"/>
                                         <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="oE6-Gl-GJA" id="eHm-nI-tr0">
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="r9r-3r-zCl" id="Gzw-BM-QvF">
                                             <rect key="frame" x="0.0" y="0.0" width="383" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Device Owner" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="VxX-mG-MVJ">
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Device Owner" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="fWA-tc-hnh">
                                                     <rect key="frame" x="20" y="0.0" width="355" height="43.5"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -176,6 +180,29 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                            <tableViewSection headerTitle="Image" id="iQd-LD-1Y7">
+                                <cells>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" indentationWidth="0.0" rowHeight="200" id="iJz-a2-QdJ">
+                                        <rect key="frame" x="0.0" y="359.5" width="414" height="200"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="iJz-a2-QdJ" id="m3g-T2-YAn">
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="200"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="gFU-0m-asJ">
+                                                    <rect key="frame" x="0.0" y="0.0" width="414" height="200"/>
+                                                </imageView>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="gFU-0m-asJ" firstAttribute="leading" secondItem="m3g-T2-YAn" secondAttribute="leading" id="1Mj-K5-NMh"/>
+                                                <constraint firstAttribute="trailing" secondItem="gFU-0m-asJ" secondAttribute="trailing" id="9tD-81-DIC"/>
+                                                <constraint firstAttribute="bottom" secondItem="gFU-0m-asJ" secondAttribute="bottom" id="LSq-mn-b5A"/>
+                                                <constraint firstItem="gFU-0m-asJ" firstAttribute="top" secondItem="m3g-T2-YAn" secondAttribute="top" id="dy4-8F-zMD"/>
+                                            </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                 </cells>
@@ -188,11 +215,12 @@
                     </tableView>
                     <navigationItem key="navigationItem" id="Fni-e6-ciH"/>
                     <connections>
-                        <outlet property="deviceIdentifierTextField" destination="bR5-xJ-eaP" id="Ztl-v6-QDn"/>
-                        <outlet property="deviceOwnerLabel" destination="VxX-mG-MVJ" id="wL4-Mp-H0G"/>
-                        <outlet property="deviceTypeTextField" destination="dd2-sd-3BL" id="l1D-GE-E3Q"/>
-                        <outlet property="nameTextField" destination="7dP-ZU-aAp" id="Djo-ag-MSX"/>
-                        <outlet property="purchaseDateTextField" destination="dCB-ds-Tat" id="q9t-Al-ENc"/>
+                        <outlet property="deviceIdentifierTextField" destination="bR5-xJ-eaP" id="u7k-MO-6cH"/>
+                        <outlet property="deviceOwnerLabel" destination="fWA-tc-hnh" id="dbp-f8-IEP"/>
+                        <outlet property="deviceTypeTextField" destination="dd2-sd-3BL" id="YIU-PJ-bCF"/>
+                        <outlet property="imageView" destination="gFU-0m-asJ" id="Ffi-6b-y83"/>
+                        <outlet property="nameTextField" destination="7dP-ZU-aAp" id="O7a-en-vu9"/>
+                        <outlet property="purchaseDateTextField" destination="dCB-ds-Tat" id="CiP-91-K5S"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jqS-ID-EOd" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

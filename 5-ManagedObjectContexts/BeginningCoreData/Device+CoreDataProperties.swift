@@ -2,7 +2,7 @@
 //  Device+CoreDataProperties.swift
 //  BeginningCoreData
 //
-//  Created by Julian Moorhouse on 30/03/2020.
+//  Created by Julian Moorhouse on 05/04/2020.
 //  Copyright © 2020 Mindwarp Consultancy Ltd. All rights reserved.
 //
 //
@@ -17,10 +17,11 @@ extension Device {
         return NSFetchRequest<Device>(entityName: "Device")
     }
 
-    @NSManaged public var deviceType: String
-    @NSManaged public var name: String
     @NSManaged public var deviceID: String?
+    @NSManaged public var deviceType: DeviceType?
+    @NSManaged public var name: String
     @NSManaged public var purchaseDate: Date?
+    @NSManaged public var image: NSObject?
     @NSManaged public var owner: Person?
 
 }

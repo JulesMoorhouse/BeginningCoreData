@@ -14,7 +14,10 @@ import CoreData
 public class Device: NSManagedObject {
 
     var deviceDescription: String {
-      return "\(name) (\(deviceType))"
+      if let deviceType = deviceType {
+        return "\(name) (\(deviceType.name))"
+      } else {
+        return "\(name)"
+      }
     }
-
 }

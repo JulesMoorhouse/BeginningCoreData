@@ -60,14 +60,25 @@ class CoreDataStack: NSObject {
         return coordinator
     }()
 
+    private lazy var savedManagedObjectContext: NSManagedObjectContext = {
+        let moc = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
+        moc.persistentStoreCoordinator = self.persistentStoreCoordinator
+        return moc
+    } ()
+    
     lazy var managedObjectContext: NSManagedObjectContext = {
         let context = NSManagedObjectContext(concurrencyType: .mainQueueConcurrencyType)
-        context.persistentStoreCoordinator = self.persistentStoreCoordinator
+        context.parent = self.savedManagedObjectContext
         return context
     }()
 
     func saveMainContext() {
-        if managedObjectContext.hasChanges {
+        guard managedObjectContext.hasChanges || savedManagedObjectContext.hasChanges else {
+            return
+        }
+        
+        managedObjectContext.performAndWait() {
+            // Save synchronously
             do {
                 try managedObjectContext.save()
             } catch {
@@ -76,6 +87,20 @@ class CoreDataStack: NSObject {
                 let nserror = error as NSError
                 fatalError("Error saving main managed object context! \(nserror), \(nserror.userInfo)")
             }
+            
+            // Save asynchronously
+            savedManagedObjectContext.perform() {
+                do {
+                    try self.savedManagedObjectContext.save()
+                } catch {
+                    let nserror = error as NSError
+                    fatalError("Error saving private managed object context! \(nserror), \(nserror.userInfo)")
+                }
+            }
+        }
+        
+        if managedObjectContext.hasChanges {
+
         }
     }
 }

@@ -2,17 +2,26 @@
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="15702" systemVersion="19D76" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="Device" representedClassName="Device" syncable="YES">
         <attribute name="deviceID" optional="YES" attributeType="String"/>
-        <attribute name="deviceType" attributeType="String"/>
+        <attribute name="image" optional="YES" attributeType="Transformable"/>
         <attribute name="name" attributeType="String"/>
         <attribute name="purchaseDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <relationship name="deviceType" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="DeviceType" inverseName="devices" inverseEntity="DeviceType"/>
         <relationship name="owner" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Person" inverseName="devices" inverseEntity="Person"/>
+    </entity>
+    <entity name="DeviceType" representedClassName="DeviceType" syncable="YES">
+        <attribute name="name" attributeType="String"/>
+        <relationship name="devices" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Device" inverseName="deviceType" inverseEntity="Device"/>
     </entity>
     <entity name="Person" representedClassName="Person" syncable="YES">
         <attribute name="name" attributeType="String"/>
-        <relationship name="devices" toMany="YES" deletionRule="Nullify" destinationEntity="Device" inverseName="owner" inverseEntity="Device"/>
+        <relationship name="devices" toMany="YES" deletionRule="Cascade" destinationEntity="Device" inverseName="owner" inverseEntity="Device"/>
+        <fetchIndex name="byNameIndex">
+            <fetchIndexElement property="name" type="Binary" order="ascending"/>
+        </fetchIndex>
     </entity>
     <elements>
-        <element name="Device" positionX="-63" positionY="-18" width="128" height="118"/>
+        <element name="Device" positionX="-63" positionY="-18" width="128" height="133"/>
         <element name="Person" positionX="-63" positionY="0" width="128" height="73"/>
+        <element name="DeviceType" positionX="-54" positionY="36" width="128" height="73"/>
     </elements>
 </model>
