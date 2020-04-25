@@ -155,7 +155,15 @@ class PeopleTableViewController: UITableViewController {
                 let newPerson = Person(entity: personEntity, insertInto: self.coreDataStack.managedObjectContext)
                 newPerson.name = text
 
-                self.coreDataStack.saveMainContext()
+                do {
+                    try self.coreDataStack.managedObjectContext.save()
+                } catch {
+                    self.coreDataStack.managedObjectContext.delete(newPerson)
+                    
+                    let alert = UIAlertController(title: "Error", message: "A person's name must be longer then a single character!", preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
+                    self.present(alert, animated: true, completion: nil)
+                }
 
                 self.reloadData()
             }

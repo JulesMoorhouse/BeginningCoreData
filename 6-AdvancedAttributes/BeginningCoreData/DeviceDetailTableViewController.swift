@@ -72,9 +72,14 @@ class DeviceDetailTableViewController: UITableViewController {
                 datePicker.date = purchaseDate
                 purchaseDateTextField.text = dateFormatter.string(from: purchaseDate)
 
+                // clear cache and get fresh data
                 coreDataStack.managedObjectContext.refresh(device, mergeChanges: true)
-                //birthday buddies
-                //https://github.com/mrPronin/IntermediateCoreData_02_AdvancedAttributes_Challenge/blob/master/myDevices-i2-demo-starter/myDevices/DeviceDetailTableViewController.swift
+
+//                if let birthdayBuddies = device.value(forKey: "purchasedOnSameDate") as? [Device] {
+//                    for birthdayBuddy in birthdayBuddies {
+//                        print("Birthday buddy! - \(birthdayBuddy.name)")
+//                    }
+//                }
             }
             
             if let deviceType = device.deviceType {
