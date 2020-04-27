@@ -2,7 +2,7 @@
 //  DeviceType+CoreDataProperties.swift
 //  BeginningCoreData
 //
-//  Created by Julian Moorhouse on 05/04/2020.
+//  Created by Julian Moorhouse on 27/04/2020.
 //  Copyright © 2020 Mindwarp Consultancy Ltd. All rights reserved.
 //
 //

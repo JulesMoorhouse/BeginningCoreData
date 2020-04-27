@@ -41,7 +41,7 @@ class CoreDataStack: NSObject {
         var failureReason = "There was an error creating or loading the application's saved data."
 
         do {
-            let options = [NSMigratePersistentStoresAutomaticallyOption: true, NSInferMappingModelAutomaticallyOption: true]
+            let options = [NSMigratePersistentStoresAutomaticallyOption: true, NSInferMappingModelAutomaticallyOption: false]
 
             try coordinator.addPersistentStore(ofType: NSSQLiteStoreType,
                                                configurationName: nil,
