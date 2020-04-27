@@ -14,6 +14,11 @@
     <entity name="DeviceType" representedClassName="DeviceType" syncable="YES">
         <attribute name="name" attributeType="String"/>
         <relationship name="devices" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Device" inverseName="deviceType" inverseEntity="Device"/>
+        <uniquenessConstraints>
+            <uniquenessConstraint>
+                <constraint value="name"/>
+            </uniquenessConstraint>
+        </uniquenessConstraints>
     </entity>
     <entity name="Person" representedClassName="Person" syncable="YES">
         <attribute name="name" attributeType="String" minValueString="2"/>
