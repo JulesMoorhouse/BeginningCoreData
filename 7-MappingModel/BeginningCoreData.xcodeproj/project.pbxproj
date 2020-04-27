@@ -33,6 +33,7 @@
 		886A9D50242D3ACE00ADF398 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		886A9D53242D3ACE00ADF398 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		886A9D55242D3ACE00ADF398 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		88A20C8B245753760085059F /* BeginningCoreData 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "BeginningCoreData 2.xcdatamodel"; sourceTree = "<group>"; };
 		88BB0515242FFBDA00AE78C8 /* Person+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Person+CoreDataClass.swift"; sourceTree = "<group>"; };
 		88BB0516242FFBDA00AE78C8 /* Person+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Person+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		88BB0517242FFBDA00AE78C8 /* Device+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Device+CoreDataClass.swift"; sourceTree = "<group>"; };
@@ -383,6 +384,7 @@
 		886A9D4D242D3ACB00ADF398 /* BeginningCoreData.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				88A20C8B245753760085059F /* BeginningCoreData 2.xcdatamodel */,
 				886A9D4E242D3ACB00ADF398 /* BeginningCoreData.xcdatamodel */,
 			);
 			currentVersion = 886A9D4E242D3ACB00ADF398 /* BeginningCoreData.xcdatamodel */;
