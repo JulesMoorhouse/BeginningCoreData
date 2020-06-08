@@ -12,8 +12,8 @@ import UIKit
 @objcMembers
 class DevicesTableViewController: UITableViewController {
     var coreDataStack: CoreDataStack!
-    var devices = [Device]()
-
+    var fetchedResultsController: NSFetchedResultsController<NSFetchRequestResult>!
+    
     var selectedPerson: Person?
 
     override func viewDidLoad() {
@@ -29,6 +29,18 @@ class DevicesTableViewController: UITableViewController {
                 UIBarButtonItem(title: "Filter", style: .plain, target: self, action: #selector(selectFilter(sender:))),
             ]
         }
+        
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Device")
+        fetchRequest.sortDescriptors = [
+            NSSortDescriptor(key: "deviceType.name", ascending: true),
+            NSSortDescriptor(key: "name", ascending: true)
+        ]
+        
+        fetchedResultsController = NSFetchedResultsController(
+            fetchRequest: fetchRequest,
+            managedObjectContext: coreDataStack.managedObjectContext,
+            sectionNameKeyPath: nil,
+            cacheName: nil)
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -40,22 +52,31 @@ class DevicesTableViewController: UITableViewController {
 
     // MARK: - Table view data source
 
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return fetchedResultsController.sections?[section].name
+    }
+    
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
+        return fetchedResultsController.sections?.count ?? 1
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return devices.count
+        return fetchedResultsController.sections?[section].numberOfObjects ?? 0
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ruDevice", for: indexPath)
 
-        let device = devices[indexPath.row]
+        let device = fetchedResultsController.object(at: indexPath) as! Device
         
         cell.textLabel?.text = device.deviceDescription
-        cell.detailTextLabel?.text = "(owner name goes here)"
-
+        
+        if let owner = device.owner {
+            cell.detailTextLabel?.text = owner.name
+        } else {
+            cell.detailTextLabel?.text = "No owner"
+        }
+        
         return cell
     }
 
@@ -115,25 +136,16 @@ class DevicesTableViewController: UITableViewController {
 
     func reloadData(predicate: NSPredicate? = nil) {
         if let selectedPerson = selectedPerson {
-            if let personDevices = selectedPerson.devices.allObjects as? [Device] {
-                devices = personDevices
-            }
+            fetchedResultsController.fetchRequest.predicate =
+                NSPredicate(format: "owner == %@", selectedPerson)
         } else {
-            let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Device")
-            fetchRequest.predicate = predicate
-
-            fetchRequest.sortDescriptors = [
-                NSSortDescriptor(key: "deviceType", ascending: true),
-                NSSortDescriptor(key: "name", ascending: true),
-            ]
-
-            do {
-                if let results = try coreDataStack.managedObjectContext.fetch(fetchRequest) as? [Device] {
-                    devices = results
-                }
-            } catch {
-                fatalError("There was an error fetching the list of devices!")
-            }
+            fetchedResultsController.fetchRequest.predicate = predicate
+        }
+        
+        do {
+            try fetchedResultsController.performFetch()
+        } catch {
+            fatalError("There was an error fetching the list of devices!")
         }
         
         tableView.reloadData()
@@ -184,7 +196,7 @@ class DevicesTableViewController: UITableViewController {
             dest.coreDataStack = coreDataStack
 
             if let selectedIndexPath = tableView.indexPathForSelectedRow {
-                let device = devices[selectedIndexPath.row]
+                let device = fetchedResultsController.object(at: selectedIndexPath) as! Device
                 dest.pDevice = device
             }
         }
